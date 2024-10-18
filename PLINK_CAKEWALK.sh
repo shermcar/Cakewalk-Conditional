@@ -1,7 +1,7 @@
 ########################################################################
 ## Results can be found in file TOP_SNPS.csv. LocusZoom plots can be  ##
 ## found in pdf files listed in TOP_SNPS.csv. Please begin by         ##
-## inputting data below.      										  ##
+## inputting data below.      	 				      ##
 ##########################input data here###############################
 
 #Select suffix, trait, chromosome, minimum and maximum region
@@ -85,7 +85,7 @@ echo $covariates_list > cov_col.csv
 sed 's/\,/\t/g' cov_col.csv > covar.txt
 covariates=`awk -F"\t" 'NR==1''{print; exit}' covar.txt` 
 
-$myPLINK --bfile $bfile --linear --pheno $pheno --covar $covfile --covar-name $covariates --maf $MAF --chr $chr --from-bp $min --to-bp $max --exclude duplicated_snps.snplist --allow-no-sex --keep-allele-order --memory $mem --out $trait.$suffix 
+$myPLINK --bfile $bfile --linear --pheno $pheno --pheno-name $pheno_name --covar $covfile --covar-name $covariates --maf $MAF --chr $chr --from-bp $min --to-bp $max --exclude duplicated_snps.snplist --allow-no-sex --keep-allele-order --memory $mem --out $trait.$suffix 
 
 #run plink just without duplicated snps
 $myPLINK --bfile $bfile --exclude duplicated_snps.snplist --keep-allele-order --make-bed --out nodup.$trait.$suffix
@@ -95,7 +95,7 @@ awk '{OFS=" "; print $2,"chr"$1":"$4}' nodup.$trait.$suffix.bim >> rename.txt
 
 $myPLINK --bfile nodup.$trait.$suffix --update-name rename.txt 2 1 --keep-allele-order --make-bed --memory $mem --out update.name
 
-$myPLINK --bfile update.name --linear --pheno $pheno --covar $covfile --covar-name $covariates --maf $MAF --chr $chr --from-bp $min --to-bp $max  --allow-no-sex --keep-allele-order --memory $mem --out $trait.$suffix.rename 
+$myPLINK --bfile update.name --linear --pheno $pheno --pheno-name $pheno_name --covar $covfile --covar-name $covariates --maf $MAF --chr $chr --from-bp $min --to-bp $max  --allow-no-sex --keep-allele-order --memory $mem --out $trait.$suffix.rename 
 
 #convert output to csv
 sed -r 's/\s+/,/g' $trait.$suffix.assoc.linear | sed -r 's/^,//g' > $suffix.nosort.csv
@@ -369,7 +369,7 @@ do
 
 	$myPLINK --bfile nodup.$trait.$suffix --update-name rename.txt 2 1 --keep-allele-order --make-bed --memory $mem --out update.name
 
-	$myPLINK --bfile update.name --linear --pheno $pheno --covar newcovar.txt --covar-name $covariates --maf $MAF --chr $chr --from-bp $min --to-bp $max  --allow-no-sex --memory $mem --keep-allele-order --out $trait.$suffix.rename 
+	$myPLINK --bfile update.name --linear --pheno $pheno --pheno-name $pheno_name --covar newcovar.txt --covar-name $covariates --maf $MAF --chr $chr --from-bp $min --to-bp $max  --allow-no-sex --memory $mem --keep-allele-order --out $trait.$suffix.rename 
 
 	#convert output to csv
 	sed -r 's/\s+/,/g' $trait.$suffix.assoc.linear | sed -r 's/^,//g' > $suffix.nosort.csv
