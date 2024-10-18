@@ -6,34 +6,37 @@
 
 #Select suffix, trait, chromosome, minimum and maximum region
 suffix=run1
-trait=LDL
+trait=logNMR
 chr=19
-min=11100000 
-max=11300000
+min=40843541
+max=40850447
 
 #Set location for covariate data
-covfile=/path/to/covariate/data
+covfile=/master/csherman/SHS_GWAS/GWAS_NMR/shs_ph2_data.txt
 
 #Set location for phenotype data
-pheno=/path/to/phenotype/data
+pheno=/master/csherman/SHS_GWAS/GWAS_NMR/shs_ph2_data.txt
+
+#Set phenotype name
+pheno_name=logNMR #here, logNMR
 
 #Set location for genomic data
-bfile=/path/to/genomic/data
+bfile=/master/csherman/SHS_GWAS/GWAS_NMR/plink/chr19
 
 #Specify bim file location
-bim=/path/to/bim/file
+bim=/master/csherman/SHS_GWAS/GWAS_NMR/plink/chr19
 
 #Set location for PLINK - download at https://www.cog-genomics.org/plink2 
-myPLINK=/path/to/plink
+myPLINK=~/miniforge3/envs/plink_tutorial/bin/plink
 
 #Set location for LocusZoom - download at https://github.com/statgen/locuszoom-standalone
-locuszoom=/path/to/locuszoom
+locuszoom=/usr/local/bin/locuszoom
 
 #Set location for perl - download at https://www.perl.org/
-perl=/path/to/perl
+perl=/usr/bin/perl
 
 #Set up covariates: separate covariates with a "," 
-covariates_list="AGE, SEX"
+covariates_list="S2AGE, b_Gender, CENTER, BMIcalc, PC1, PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9, PC10" #covariates included in original model
 
 #Set minor allele frequency
 MAF=0.01
@@ -42,7 +45,7 @@ MAF=0.01
 pmark=0.01
 
 #Set p-value for ending analysis (exponential form)
-max_pvala=1E-4
+max_pvala=1E-8
 
 #Set p-value for creating markers list in loop for LD calculations
 pmark_loop=0.05
@@ -63,7 +66,7 @@ dir=Results
 mem=5000
 
 #Is the variant name in chr:pos:ref:alt format (0=yes; 1=no)?
-format=1
+format=0
 
 #Do you want the output other than results deleted? (0=yes; 1=no)
 debug=0
